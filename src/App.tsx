@@ -3,6 +3,10 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Auth from "components/auth/Auth";
 import {createTheme, ThemeProvider} from "@mui/material";
 import Header from "components/header/Header";
+import Home from "components/home/Home";
+import {ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import SocketEventsListener from "services/socket/SocketEventsListener";
 
 
 function App() {
@@ -20,8 +24,14 @@ function App() {
         main: '#e53935',
       },
       success:{
-        main: '#44D62C',
+        main: '#51FF34',
       },
+      warning:{
+        main: '#ff9800',
+      },
+      info:{
+        main: '#2196f3',
+      }
     },
   });
 
@@ -33,9 +43,21 @@ function App() {
             <Header />
             <Switch>
               <Route path="/" exact>
-                <Auth />
+                <Home />
               </Route>
             </Switch>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
+            <SocketEventsListener />
           </Router>
         </div>
       </ThemeProvider>

@@ -1,6 +1,5 @@
 import React from 'react';
 import {Container, Grid, Typography} from "@mui/material";
-import {ToastContainer} from "react-toastify";
 import LogIn from "components/auth/LogIn";
 import SignUp from "components/auth/SignUp";
 
@@ -19,17 +18,6 @@ const Auth = () => {
             <SignUp />
           </Grid>
         </Grid>
-        <ToastContainer
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-        />
       </Container>
   );
 };
