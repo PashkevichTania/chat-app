@@ -2,7 +2,7 @@ import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Auth from "components/auth/Auth";
 import {createTheme, ThemeProvider} from "@mui/material";
-
+import Header from "components/header/Header";
 
 
 function App() {
@@ -14,10 +14,13 @@ function App() {
         main: '#44D62C',
       },
       secondary: {
-        main: '#212121',
+        main: '#21252B',
       },
       error: {
         main: '#e53935',
+      },
+      success:{
+        main: '#44D62C',
       },
     },
   });
@@ -25,15 +28,16 @@ function App() {
 
   return (
       <ThemeProvider theme={theme}>
-      <div className="App">
-        <Router>
-          <Switch>
-            <Route path="/" exact>
-              <Auth/>
-            </Route>
-          </Switch>
-        </Router>
-      </div>
+        <div className="App">
+          <Router>
+            <Header />
+            <Switch>
+              <Route path="/" exact>
+                <Auth />
+              </Route>
+            </Switch>
+          </Router>
+        </div>
       </ThemeProvider>
   );
 }
