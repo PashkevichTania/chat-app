@@ -13,7 +13,8 @@ export interface IRoom {
 }
 
 export interface IMessage {
+  socketID: string,
   user: IUser,
   text: string,
-  date: Date
+  date: string
 }

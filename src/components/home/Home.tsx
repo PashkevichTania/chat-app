@@ -4,6 +4,7 @@ import Socket from "services/socket/socket";
 import {useSelector} from "react-redux";
 import {userSelector} from "redux/selectors";
 import Chat from "components/chat/Chat";
+import {IMessage} from "interfaces";
 
 
 const Home = () => {
@@ -33,7 +34,18 @@ const Home = () => {
     const target = event.target as typeof event.target & {
       text: { value: string };
     };
-    Socket.sendMessage(user, target.text.value, currentDate)
+
+    const message:IMessage = {
+      socketID: Socket.socket.id,
+      user: user,
+      text: target.text.value,
+      date: currentDate.toLocaleString(
+          'en-GB',
+          {hour: "numeric", minute: "numeric", month: "long", day: "numeric"}
+      ),
+    }
+    console.log('mes', message)
+    Socket.sendMessage(message)
   }
 
   return (

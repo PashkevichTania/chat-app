@@ -22,8 +22,8 @@ export const roomSlice = createSlice({
     setRoom: (state, action:{payload: IRoom, type: string}) => {
       state.room = action.payload
     },
-    addMessage: (state, action:{payload: IMessage, type: string}) => {
-      state.room.messages.push(action.payload)
+    addMessage: (state, action:{payload: IMessage[], type: string}) => {
+      state.room.messages = action.payload
     },
     addUserToRoom: (state, action:{payload: IUser, type: string}) => {
       state.room.usersInRoom.push(action.payload)

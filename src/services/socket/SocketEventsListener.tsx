@@ -1,12 +1,16 @@
 import Socket from "services/socket/socket";
+import {useDispatch} from "react-redux";
+import {addMessage} from "redux/roomReducer";
+import {IMessage} from "interfaces";
 
 const SocketEventsListener = () => {
+
+  const dispatch = useDispatch()
 
 
   Socket.socket.connect();
   console.log(Socket.socket);
 
-  console.log("ENV ", process.env.REACT_APP_DOMAIN)
 
   const reviver = (key: any, value: any) => {
     if (typeof value === 'object' && value !== null) {
@@ -62,10 +66,11 @@ const SocketEventsListener = () => {
   });
 
   Socket.socket.on('messageSent', (args: {
-    room: string,
+    messages: string,
   }) => {
-    const room = JSON.parse(args.room, reviver);
-    console.log('messageSent', room.messages);
+    const messages:IMessage[] = JSON.parse(args.messages);
+    console.log('messageSent', messages);
+    dispatch(addMessage(messages))
   });
 
   Socket.socket.on('roomDelete', (args: {}) => {

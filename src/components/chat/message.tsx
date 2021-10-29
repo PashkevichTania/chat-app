@@ -1,16 +1,25 @@
 import React from 'react';
 import {IMessage} from "interfaces";
+import {MessageStyled} from "components/Styled/styledComponents";
 
-const Message = (props: {message: IMessage}) => {
+const Message = (props: { message: IMessage }) => {
 
   const {message} = props;
 
+
+
   return (
-      <div>
-        <p>{message.user.firstName} {message.user.lastName}</p>
-        <p>{message.text}</p>
-        <p>{JSON.stringify(message.date)}</p>
-      </div>
+      <MessageStyled>
+        <div className={"userName"}>
+          {message.user.firstName} {message.user.lastName}
+        </div>
+        <div className={"text"}>
+          {message.text}
+        </div>
+        <div className={"date"}>
+          {message.date}
+        </div>
+      </MessageStyled>
   );
 };
 

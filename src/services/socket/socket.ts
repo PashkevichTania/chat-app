@@ -1,5 +1,5 @@
 import io from "socket.io-client";
-import {IUser} from "interfaces";
+import {IMessage, IUser} from "interfaces";
 import {toast} from "react-toastify";
 
 
@@ -45,8 +45,8 @@ export default class Socket {
     });
   }
 
-  public static sendMessage(user: IUser, text: string, time: Date){
-    this.socket.emit('sendMessage', { user, text, time }, (error: any) => {
+  public static sendMessage(message: IMessage){
+    this.socket.emit('sendMessage', { message }, (error: any) => {
       if (error) {
         console.log(error);
         this.notify(JSON.stringify(error));
