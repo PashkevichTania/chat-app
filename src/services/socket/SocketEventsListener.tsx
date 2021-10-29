@@ -1,7 +1,7 @@
 import Socket from "services/socket/socket";
 import {useDispatch} from "react-redux";
-import {addMessage} from "redux/roomReducer";
-import {IMessage} from "interfaces";
+import {setMessages, setUserInRoom, setRoom} from "redux/roomReducer";
+import {IMessage, IUser} from "interfaces";
 
 const SocketEventsListener = () => {
 
@@ -27,9 +27,8 @@ const SocketEventsListener = () => {
   }) => {
     const room = JSON.parse(args.room, reviver);
     room.usersInRoom = Array.from(room.usersInRoom)
-    console.log('successfullyJoined', args, room);
     console.log('room created', room);
-
+    dispatch(setRoom(room));
   });
 
   Socket.socket.on('successfullyJoined', (args: {
@@ -38,31 +37,32 @@ const SocketEventsListener = () => {
     const room = JSON.parse(args.room, reviver);
     room.usersInRoom = Array.from(room.usersInRoom)
     console.log('successfullyJoined', room);
-
+    dispatch(setRoom(room))
   });
 
   Socket.socket.on('userJoined', (args: {
-    room: string,
+    usersInRoom: string,
   }) => {
-    const room = JSON.parse(args.room, reviver);
-    room.usersInRoom = Array.from(room.usersInRoom)
-    console.log('userJoined', room);
+    const usersInRoom:Map<string, IUser> = JSON.parse(args.usersInRoom, reviver);
+    const users = Array.from(usersInRoom.values())
+    dispatch(setUserInRoom(users))
   });
 
   Socket.socket.on('userLeft', (args: {
-    room: string,
+    usersInRoom: string,
   }) => {
-    const room = JSON.parse(args.room, reviver);
-    room.usersInRoom = Array.from(room.usersInRoom)
-    console.log('userleft', room);
+    const usersInRoom:Map<string, IUser> = JSON.parse(args.usersInRoom, reviver);
+    const users = Array.from(usersInRoom.values())
+    dispatch(setUserInRoom(users))
   });
 
   Socket.socket.on('userDisconnected', (args: {
-    room: string,
+    usersInRoom: string,
   }) => {
-    const room = JSON.parse(args.room, reviver);
-    room.usersInRoom = Array.from(room.usersInRoom)
-    console.log('userdisc',room);
+    const usersInRoom:Map<string, IUser> = JSON.parse(args.usersInRoom, reviver);
+    const users = Array.from(usersInRoom.values())
+    console.log('userDisconected')
+    dispatch(setUserInRoom(users))
   });
 
   Socket.socket.on('messageSent', (args: {
@@ -70,7 +70,7 @@ const SocketEventsListener = () => {
   }) => {
     const messages:IMessage[] = JSON.parse(args.messages);
     console.log('messageSent', messages);
-    dispatch(addMessage(messages))
+    dispatch(setMessages(messages))
   });
 
   Socket.socket.on('roomDelete', (args: {}) => {

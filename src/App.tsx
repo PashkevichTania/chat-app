@@ -7,6 +7,7 @@ import Home from "components/home/Home";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import SocketEventsListener from "services/socket/SocketEventsListener";
+import Chat from "components/chat/Chat";
 
 
 function App() {
@@ -20,8 +21,8 @@ function App() {
       secondary: {
         main: '#21252B',
       },
-      error: {
-        main: '#e53935',
+      info:{
+        main: '#2196f3',
       },
       success:{
         main: '#51FF34',
@@ -29,9 +30,9 @@ function App() {
       warning:{
         main: '#ff9800',
       },
-      info:{
-        main: '#2196f3',
-      }
+      error: {
+        main: '#e53935',
+      },
     },
   });
 
@@ -44,6 +45,12 @@ function App() {
             <Switch>
               <Route path="/" exact>
                 <Home />
+              </Route>
+              <Route path="/auth" exact>
+                <Auth />
+              </Route>
+              <Route path="/chat" exact>
+                <Chat />
               </Route>
             </Switch>
             <ToastContainer

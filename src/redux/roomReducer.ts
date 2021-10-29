@@ -22,15 +22,15 @@ export const roomSlice = createSlice({
     setRoom: (state, action:{payload: IRoom, type: string}) => {
       state.room = action.payload
     },
-    addMessage: (state, action:{payload: IMessage[], type: string}) => {
+    setMessages: (state, action:{payload: IMessage[], type: string}) => {
       state.room.messages = action.payload
     },
-    addUserToRoom: (state, action:{payload: IUser, type: string}) => {
-      state.room.usersInRoom.push(action.payload)
+    setUserInRoom: (state, action:{payload: IUser[], type: string}) => {
+      state.room.usersInRoom = action.payload
     },
   },
 })
 
-export const {setRoom, addMessage, addUserToRoom} = roomSlice.actions
+export const {setRoom, setMessages, setUserInRoom} = roomSlice.actions
 
 export default roomSlice.reducer
