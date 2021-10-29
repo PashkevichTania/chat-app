@@ -1,18 +1,21 @@
 import React from 'react';
 import MessagesContainer from "components/chat/messages/MessagesContainer";
 import UsersContainer from "components/chat/users/UsersContainer";
-import {Container, Grid, IconButton, TextField, Typography} from "@mui/material";
+import {Button, Container, Grid, IconButton, TextField, Typography} from "@mui/material";
 import {useSelector} from "react-redux";
 import {roomDataSelector} from "redux/selectors";
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import {toast} from "react-toastify";
 import SendMessageInput from "components/chat/messages/SendMessageInput";
+import Socket from "services/socket/socket";
+import {useHistory} from "react-router-dom";
 
 
 const Chat = () => {
 
 
   const roomData = useSelector(roomDataSelector);
+  const history = useHistory();
 
   const notify = () => toast.success('🦄 Copied chat ID!', {
     position: "top-right",
@@ -31,13 +34,21 @@ const Chat = () => {
     notify();
   };
 
+  const exitHandler = () => {
+    Socket.leaveRoom();
+    history.push('/')
+  }
+
   return (
       <Container>
         <Grid container spacing={2} sx={{mb: "40px"}}>
-          <Grid item xs={12} md={6} sx={{m: "auto"}}>
+          <Grid item xs={12} md={4} sx={{m: "auto"}}>
             <Typography fontSize={"1.2rem"}>
               Chat name: <Typography component={"span"} color={"primary"} fontSize={"1.2rem"} fontWeight={"bold"} >{roomData.roomName}</Typography>
             </Typography>
+          </Grid>
+          <Grid item xs={12} md={2} sx={{m: "auto"}}>
+            <Button variant={"contained"} color={"error"} onClick={exitHandler}>Exit</Button>
           </Grid>
           <Grid item xs={12} md={6}>
             <TextField

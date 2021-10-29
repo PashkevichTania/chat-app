@@ -5,6 +5,9 @@ import {useFormik} from "formik";
 import * as Yup from "yup";
 import {useHistory} from "react-router-dom";
 import {toast} from "react-toastify";
+import {useDispatch} from "react-redux";
+import {setUser} from "redux/userReducer";
+import {IUser} from "interfaces";
 
 const SignUp = () => {
   const notify = (text: string) => toast.error(text, {
@@ -17,8 +20,9 @@ const SignUp = () => {
     progress: undefined,
   });
 
-  const history = useHistory()
-  const [checked, setChecked] = useState(false)
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const [checked, setChecked] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -39,9 +43,17 @@ const SignUp = () => {
     }),
 
     onSubmit: (values) => {
+      const user:IUser = {
+        firstName: values.firstName,
+        lastName: values.lastName,
+        email: values.email,
+      }
+      window.sessionStorage.setItem('user',JSON.stringify(user))
       if (checked){
         window.localStorage.setItem('userEmail', values.email)
       }
+      dispatch(setUser(user));
+      history.replace('/')
     },
   });
 

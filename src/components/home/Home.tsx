@@ -17,7 +17,6 @@ const Home = () => {
       chatName: { value: string };
     };
     Socket.createRoom(target.chatName.value, user);
-    history.push('/chat');
   }
 
   const connectToChatHandler = (event: React.SyntheticEvent) => {
@@ -26,7 +25,10 @@ const Home = () => {
       chatID: { value: string };
     };
     Socket.joinRoom(target.chatID.value, user);
-    history.push('/chat');
+  }
+
+  if (!window.sessionStorage.getItem('user')){
+    history.push('/auth');
   }
 
 

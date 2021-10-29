@@ -1,13 +1,14 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Auth from "components/auth/Auth";
-import {createTheme, ThemeProvider} from "@mui/material";
+import {Container, createTheme, ThemeProvider, Typography} from "@mui/material";
 import Header from "components/header/Header";
 import Home from "components/home/Home";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import SocketEventsListener from "services/socket/SocketEventsListener";
 import Chat from "components/chat/Chat";
+import Socket from "services/socket/socket";
 
 
 function App() {
@@ -21,13 +22,13 @@ function App() {
       secondary: {
         main: '#21252B',
       },
-      info:{
+      info: {
         main: '#2196f3',
       },
-      success:{
+      success: {
         main: '#51FF34',
       },
-      warning:{
+      warning: {
         main: '#ff9800',
       },
       error: {
@@ -35,22 +36,30 @@ function App() {
       },
     },
   });
+  // if (Socket.socket.disconnected) {
+  //   return <Typography
+  //       fontSize={"xx-large"}
+  //       color={"error"}
+  //       sx={{display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh"}}>
+  //     Cannot connect to server
+  //   </Typography>
+  // }
 
 
   return (
       <ThemeProvider theme={theme}>
         <div className="App">
           <Router>
-            <Header />
+            <Header/>
             <Switch>
               <Route path="/" exact>
-                <Home />
+                <Home/>
               </Route>
               <Route path="/auth" exact>
-                <Auth />
+                <Auth/>
               </Route>
               <Route path="/chat" exact>
-                <Chat />
+                <Chat/>
               </Route>
             </Switch>
             <ToastContainer
@@ -64,7 +73,7 @@ function App() {
                 draggable
                 pauseOnHover
             />
-            <SocketEventsListener />
+            <SocketEventsListener/>
           </Router>
         </div>
       </ThemeProvider>

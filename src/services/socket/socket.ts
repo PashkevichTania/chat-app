@@ -18,8 +18,8 @@ export default class Socket {
     progress: undefined,
   });
 
-  public static leaveRoom(roomID: string){
-    this.socket.emit('leavingRoom', { roomID }, (error: any) => {
+  public static leaveRoom(){
+    this.socket.emit('leavingRoom', { }, (error: any) => {
       if (error) {
         console.log(error);
         this.notify(JSON.stringify(error));

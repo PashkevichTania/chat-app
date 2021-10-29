@@ -17,8 +17,8 @@ const LogIn = () => {
     progress: undefined,
   });
 
-  const history = useHistory()
-  const [checked, setChecked] = useState(false)
+  const history = useHistory();
+  const [checked, setChecked] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -31,10 +31,9 @@ const LogIn = () => {
     }),
 
     onSubmit: (values) => {
-      if (checked){
+      if (checked) {
         window.localStorage.setItem('userEmail', values.email)
       }
-
     },
   });
 

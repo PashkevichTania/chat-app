@@ -2,10 +2,12 @@ import Socket from "services/socket/socket";
 import {useDispatch} from "react-redux";
 import {setMessages, setUserInRoom, setRoom} from "redux/roomReducer";
 import {IMessage, IUser} from "interfaces";
+import {useHistory} from "react-router-dom";
 
 const SocketEventsListener = () => {
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const history = useHistory();
 
 
   Socket.socket.connect();
@@ -22,13 +24,13 @@ const SocketEventsListener = () => {
   }
 
   Socket.socket.on('roomCreated', (args: {
-    description: string,
     room: string,
   }) => {
     const room = JSON.parse(args.room, reviver);
     room.usersInRoom = Array.from(room.usersInRoom)
     console.log('room created', room);
     dispatch(setRoom(room));
+    history.push('/chat')
   });
 
   Socket.socket.on('successfullyJoined', (args: {
@@ -38,6 +40,7 @@ const SocketEventsListener = () => {
     room.usersInRoom = Array.from(room.usersInRoom)
     console.log('successfullyJoined', room);
     dispatch(setRoom(room))
+    history.push('/chat')
   });
 
   Socket.socket.on('userJoined', (args: {
