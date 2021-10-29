@@ -15,4 +15,5 @@ export interface IRoom {
 export interface IMessage {
   user: IUser,
   text: string,
+  date: Date
 }

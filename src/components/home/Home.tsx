@@ -3,6 +3,7 @@ import {Button, Container, Grid, TextField, Typography} from "@mui/material";
 import Socket from "services/socket/socket";
 import {useSelector} from "react-redux";
 import {userSelector} from "redux/selectors";
+import Chat from "components/chat/Chat";
 
 
 const Home = () => {
@@ -86,6 +87,7 @@ const Home = () => {
             />
             <Button type={"submit"}>send</Button>
           </form>
+        <Chat/>
       </Container>
   );
 };
