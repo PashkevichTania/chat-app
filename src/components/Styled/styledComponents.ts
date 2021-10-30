@@ -27,6 +27,7 @@ export const MessageStyled = styled.div<MessageStyledProps>`
   .text{
     margin: 10px 0 10px 0;
     font-size: 1.3rem;
+    word-break: break-word;
   }
   .date{
     font-size: 0.8rem;
@@ -54,6 +55,7 @@ export const UserStyled = styled.div`
   border-radius: 10px;
   display: flex;
   flex-direction: column;
+  word-break: break-word;
 `
 
 export const ChatStyled = styled.div`
