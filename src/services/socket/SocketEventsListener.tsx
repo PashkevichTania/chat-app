@@ -14,21 +14,11 @@ const SocketEventsListener = () => {
   console.log(Socket.socket);
 
 
-  const reviver = (key: any, value: any) => {
-    if (typeof value === 'object' && value !== null) {
-      if (value.dataType === 'Map') {
-        return new Map(value.value);
-      }
-    }
-    return value;
-  }
 
   Socket.socket.on('roomCreated', (args: {
     room: string,
   }) => {
-    const room = JSON.parse(args.room, reviver);
-    room.usersInRoom = Array.from(room.usersInRoom)
-    console.log('room created', room);
+    const room = JSON.parse(args.room);
     dispatch(setRoom(room));
     history.push('/chat')
   });
@@ -36,9 +26,7 @@ const SocketEventsListener = () => {
   Socket.socket.on('successfullyJoined', (args: {
     room: string,
   }) => {
-    const room = JSON.parse(args.room, reviver);
-    room.usersInRoom = Array.from(room.usersInRoom)
-    console.log('successfullyJoined', room);
+    const room = JSON.parse(args.room);
     dispatch(setRoom(room))
     history.push('/chat')
   });
@@ -46,25 +34,21 @@ const SocketEventsListener = () => {
   Socket.socket.on('userJoined', (args: {
     usersInRoom: string,
   }) => {
-    const usersInRoom:Map<string, IUser> = JSON.parse(args.usersInRoom, reviver);
-    const users = Array.from(usersInRoom.values())
+    const users:IUser[] = JSON.parse(args.usersInRoom);
     dispatch(setUserInRoom(users))
   });
 
   Socket.socket.on('userLeft', (args: {
     usersInRoom: string,
   }) => {
-    const usersInRoom:Map<string, IUser> = JSON.parse(args.usersInRoom, reviver);
-    const users = Array.from(usersInRoom.values())
+    const users:IUser[] = JSON.parse(args.usersInRoom);
     dispatch(setUserInRoom(users))
   });
 
   Socket.socket.on('userDisconnected', (args: {
     usersInRoom: string,
   }) => {
-    const usersInRoom:Map<string, IUser> = JSON.parse(args.usersInRoom, reviver);
-    const users = Array.from(usersInRoom.values())
-    console.log('userDisconected')
+    const users:IUser[] = JSON.parse(args.usersInRoom);
     dispatch(setUserInRoom(users))
   });
 
@@ -72,7 +56,6 @@ const SocketEventsListener = () => {
     messages: string,
   }) => {
     const messages:IMessage[] = JSON.parse(args.messages);
-    console.log('messageSent', messages);
     dispatch(setMessages(messages))
   });
 
