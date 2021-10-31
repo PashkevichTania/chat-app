@@ -3,21 +3,10 @@ import {Button, Checkbox, Container, FormControlLabel, TextField, Typography} fr
 import {ErrorFormMessage} from "components/Styled/styledComponents";
 import {useFormik} from "formik";
 import * as Yup from "yup";
-import {useHistory} from "react-router-dom";
-import {toast} from "react-toastify";
+import {firebaseSingIn} from "firebase";
 
 const LogIn = () => {
-  const notify = (text: string) => toast.error(text, {
-    position: "top-right",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-  });
 
-  const history = useHistory();
   const [checked, setChecked] = useState(false);
 
   const formik = useFormik({
@@ -34,6 +23,7 @@ const LogIn = () => {
       if (checked) {
         window.localStorage.setItem('userEmail', values.email)
       }
+      firebaseSingIn(values.email, values.password);
     },
   });
 

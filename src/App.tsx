@@ -1,14 +1,14 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Auth from "components/auth/Auth";
-import {Container, createTheme, ThemeProvider, Typography} from "@mui/material";
+import {createTheme, ThemeProvider} from "@mui/material";
 import Header from "components/header/Header";
 import Home from "components/home/Home";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import SocketEventsListener from "services/socket/SocketEventsListener";
 import Chat from "components/chat/Chat";
-import Socket from "services/socket/socket";
+import AuthCheck from "components/auth/AuthCheck";
 
 
 function App() {
@@ -74,6 +74,7 @@ function App() {
                 pauseOnHover
             />
             <SocketEventsListener/>
+            <AuthCheck />
           </Router>
         </div>
       </ThemeProvider>

@@ -6,7 +6,8 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  updateProfile
+  updateProfile,
+  signOut
 } from "firebase/auth";
 import {
   getStorage,
@@ -68,7 +69,6 @@ const firebaseSingUp = (firstName: string, lastName: string, email: string, pass
           })
         })
       }).catch(error);
-  return auth.currentUser;
 }
 
 const firebaseSingIn = (email: string, password: string) => {
@@ -78,18 +78,12 @@ const firebaseSingIn = (email: string, password: string) => {
         console.log(user)
       })
       .catch(error);
-  return auth.currentUser;
 }
-// onAuthStateChanged(auth, (user) => {
-//   if (user) {
-//     // User is signed in, see docs for a list of available properties
-//     // https://firebase.google.com/docs/reference/js/firebase.User
-//     const uid = user.uid;
-//     // ...
-//   } else {
-//     // User is signed out
-//     // ...
-//   }
-// });
 
-export {firebaseSingIn, firebaseSingUp}
+const firebaseLogOut = () =>{
+  signOut(auth).then(() => {
+    // Sign-out successful.
+  }).catch(error);
+}
+
+export {firebaseSingIn, firebaseSingUp, firebaseLogOut}

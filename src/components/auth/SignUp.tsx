@@ -3,18 +3,13 @@ import {Button, Checkbox, Container, FormControlLabel, TextField, Typography} fr
 import {ErrorFormMessage} from "components/Styled/styledComponents";
 import {useFormik} from "formik";
 import * as Yup from "yup";
-import {useHistory} from "react-router-dom";
-import {useDispatch} from "react-redux";
-import {setUser} from "redux/userReducer";
 import {firebaseSingUp} from "firebase";
 
 const SignUp = () => {
 
 
-  const history = useHistory();
-  const dispatch = useDispatch();
   const [checked, setChecked] = useState(false);
-  const [img, setimg] = useState<File | null >(null);
+  const [img, setimg] = useState<File | null>(null);
 
   const formik = useFormik({
     initialValues: {
@@ -40,19 +35,9 @@ const SignUp = () => {
 
     onSubmit: (values) => {
       console.log(img)
-      const userData = firebaseSingUp(values.firstName, values.lastName, values.email, values.password, img!);
-      if (userData){
-        const user = {
-          displayName: userData.displayName,
-          email: userData.email,
-          photoURL: userData.photoURL,
-          uid: userData.uid,
-        }
-        if (checked){
-          window.localStorage.setItem('userEmail', values.email)
-        }
-        dispatch(setUser(user));
-        //history.replace('/');
+      firebaseSingUp(values.firstName, values.lastName, values.email, values.password, img!);
+      if (checked) {
+        window.localStorage.setItem('userEmail', values.email)
       }
     },
   });
@@ -131,8 +116,9 @@ const SignUp = () => {
               />}
               label="Remember me"
           />
-          <input type="file" onChange={(event)=>{ // @ts-ignore
-            setimg(event.target.files[0])}}/>
+          <input type="file" onChange={(event) => { // @ts-ignore
+            setimg(event.target.files[0])
+          }}/>
           <Button type={"submit"}>Sign up</Button>
         </form>
       </Container>

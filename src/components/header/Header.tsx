@@ -1,13 +1,17 @@
 import React from 'react';
 import {AppBar, Button, Toolbar, Typography} from "@mui/material";
-import {useHistory} from "react-router-dom";
+import {firebaseLogOut} from "firebase";
+import {useSelector} from "react-redux";
+import {authSelector} from "redux/selectors";
+import UserInfo from "components/header/UserInfo";
 
 const Header = () => {
 
-  const history = useHistory()
+  const isAuth = useSelector(authSelector)
 
-  const clickHandler = () => {
-    history.push('/auth')
+
+  const logOutHandler = () => {
+    firebaseLogOut();
   }
 
   return (
@@ -16,14 +20,18 @@ const Header = () => {
           <Typography variant="h6" color="inherit" noWrap component={"h1"}>
             Chat App
           </Typography>
-          <Button color={"primary"}>pr</Button>
-          <Button color={"success"}>sss</Button>
-          <Button color={"secondary"}>sec</Button>
-          <Button color={"info"}>info</Button>
-          <Button color={"error"}>error</Button>
-          <Button color={"warning"}>warning</Button>
-          <Button onClick={clickHandler} variant={"outlined"}
-                  sx={{fontSize: "large"}}>Auth Page</Button>
+          {isAuth?
+              <div>
+                <UserInfo />
+                <Button onClick={logOutHandler}
+                        variant={"outlined"}
+                        color={"error"}
+                >LogOut</Button>
+              </div> :
+              <Typography variant="h6" color="inherit" noWrap>
+                You are not logged in!
+              </Typography>
+          }
         </Toolbar>
       </AppBar>
   );

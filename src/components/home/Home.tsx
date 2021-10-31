@@ -3,13 +3,11 @@ import {Button, Container, Grid, TextField, Typography} from "@mui/material";
 import Socket from "services/socket/socket";
 import {useSelector} from "react-redux";
 import {userSelector} from "redux/selectors";
-import {useHistory} from "react-router-dom";
 
 
 const Home = () => {
 
   const user = useSelector(userSelector);
-  const history = useHistory();
 
   const createChatHandler = (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -27,9 +25,6 @@ const Home = () => {
     Socket.joinRoom(target.chatID.value, user);
   }
 
-  if (!window.sessionStorage.getItem('user')){
-    history.push('/auth');
-  }
 
 
   return (
