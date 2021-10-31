@@ -2,8 +2,18 @@
 
 import {initializeApp} from "firebase/app";
 import {getFirestore} from 'firebase/firestore/lite';
-import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, updateProfile} from "firebase/auth";
-import {getStorage, ref, uploadBytes} from "firebase/storage";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile
+} from "firebase/auth";
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+} from "firebase/storage";
 import {toast} from "react-toastify";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -48,14 +58,15 @@ const firebaseSingUp = (firstName: string, lastName: string, email: string, pass
         const storageRef= ref(storage, `/users/${user.uid}/${file.name}`)
         uploadBytes(storageRef, file).then((snapshot) => {
           console.log('Uploaded a blob or file!');
-          console.log(user)
-          updateProfile(auth.currentUser!, {
-            displayName: firstName + ' ' + lastName,
-            photoURL: `/users/${user.uid}/${file.name}`
-          }).then(() => {
-            console.log(auth.currentUser);
-          }).catch(error);
-        }).catch(error);
+          getDownloadURL(storageRef).then(imageUrl => {
+            updateProfile(auth.currentUser!, {
+              displayName: firstName + ' ' + lastName,
+              photoURL: imageUrl,
+            }).then(() => {
+              console.log(auth.currentUser);
+            })
+          })
+        })
       }).catch(error);
   return auth.currentUser;
 }
