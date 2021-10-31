@@ -12,7 +12,7 @@ const Message = (props: { message: IMessage }) => {
   return (
       <MessageStyled myMsg={myMsg}>
         <div className={"userName"}>
-          {message.user.firstName} {message.user.lastName}
+          {message.user.displayName}
         </div>
         <div className={"text"}>
           {message.text}

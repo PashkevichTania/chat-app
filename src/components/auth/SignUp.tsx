@@ -4,25 +4,17 @@ import {ErrorFormMessage} from "components/Styled/styledComponents";
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import {useHistory} from "react-router-dom";
-import {toast} from "react-toastify";
 import {useDispatch} from "react-redux";
 import {setUser} from "redux/userReducer";
-import {IUser} from "interfaces";
+import {firebaseSingUp} from "firebase";
 
 const SignUp = () => {
-  const notify = (text: string) => toast.error(text, {
-    position: "top-right",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-  });
+
 
   const history = useHistory();
   const dispatch = useDispatch();
   const [checked, setChecked] = useState(false);
+  const [img, setimg] = useState<File | null >(null);
 
   const formik = useFormik({
     initialValues: {
@@ -38,22 +30,30 @@ const SignUp = () => {
       lastName: Yup.string()
           .max(20, 'Must be 20 characters or less')
           .required('Required'),
-      email: Yup.string().email('Invalid email address').required('Required'),
-      password: Yup.string().required('Required'),
+      email: Yup.string()
+          .email('Invalid email address')
+          .required('Required'),
+      password: Yup.string()
+          .min(8, 'Password is too short - should be 8 chars minimum.')
+          .required('Required'),
     }),
 
     onSubmit: (values) => {
-      const user:IUser = {
-        firstName: values.firstName,
-        lastName: values.lastName,
-        email: values.email,
+      console.log(img)
+      const userData = firebaseSingUp(values.firstName, values.lastName, values.email, values.password, img!);
+      if (userData){
+        const user = {
+          displayName: userData.displayName,
+          email: userData.email,
+          photoURL: userData.photoURL,
+          uid: userData.uid,
+        }
+        if (checked){
+          window.localStorage.setItem('userEmail', values.email)
+        }
+        dispatch(setUser(user));
+        //history.replace('/');
       }
-      window.sessionStorage.setItem('user',JSON.stringify(user))
-      if (checked){
-        window.localStorage.setItem('userEmail', values.email)
-      }
-      dispatch(setUser(user));
-      history.replace('/')
     },
   });
 
@@ -131,6 +131,8 @@ const SignUp = () => {
               />}
               label="Remember me"
           />
+          <input type="file" onChange={(event)=>{ // @ts-ignore
+            setimg(event.target.files[0])}}/>
           <Button type={"submit"}>Sign up</Button>
         </form>
       </Container>

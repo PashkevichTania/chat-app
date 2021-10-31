@@ -7,9 +7,10 @@ const initialState:{room: IRoom} = {
     roomName: 'test',
     usersInRoom: [],
     admin: {
-        firstName: 'test',
-        lastName: 'test',
-        email: 'test',
+      displayName: 'test',
+      email: 'test',
+      photoURL: 'test',
+      uid: 'test',
     },
     messages: []
   }

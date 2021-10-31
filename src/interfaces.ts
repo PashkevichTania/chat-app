@@ -1,7 +1,8 @@
 export interface IUser {
-  firstName: string,
-  lastName: string,
+  displayName: string,
   email: string,
+  photoURL: string,
+  uid: string,
 }
 
 export interface IRoom {

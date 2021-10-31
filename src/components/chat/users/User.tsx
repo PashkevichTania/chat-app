@@ -8,7 +8,7 @@ const User = (props: { user: IUser }) => {
   const {user} = props;
   return (
       <UserStyled>
-        <Typography color={"secondary"} fontWeight={"bolder"}>{user.firstName} {user.lastName}</Typography>
+        <Typography color={"secondary"} fontWeight={"bolder"}>{user.displayName}</Typography>
         <Typography color={"secondary"}>{user.email}</Typography>
       </UserStyled>
   );
