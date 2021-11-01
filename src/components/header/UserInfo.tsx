@@ -7,7 +7,7 @@ import {firebaseLogOut} from "services/firebase";
 
 const UserInfo = () => {
 
-  const user = useSelector(userSelector)
+  const user = useSelector(userSelector);
   const logOutHandler = () => {
     firebaseLogOut();
   }

@@ -57,9 +57,8 @@ const firebaseSingUp = (firstName: string, lastName: string, email: string, pass
       .then((userCredential) => {
         const user = userCredential.user;
         if(file){
-          const storageRef= ref(storage, `/users/${user.uid}/${file.name}`)
+          const storageRef= ref(storage, `/users/avatars/${user.uid}/${file.name}`)
           uploadBytes(storageRef, file).then((snapshot) => {
-            console.log('Uploaded a blob or file!');
             getDownloadURL(storageRef).then(imageUrl => {
               updateProfile(user, {
                 displayName: firstName + ' ' + lastName,
