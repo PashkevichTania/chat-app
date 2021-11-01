@@ -3,7 +3,7 @@ import {Button, Checkbox, Container, FormControlLabel, TextField, Typography} fr
 import {ErrorFormMessage} from "components/Styled/styledComponents";
 import {useFormik} from "formik";
 import * as Yup from "yup";
-import {firebaseSingIn} from "firebase";
+import {firebaseSingIn} from "services/firebase";
 
 const LogIn = () => {
 

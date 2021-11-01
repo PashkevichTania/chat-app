@@ -52,22 +52,34 @@ const error = (error: any)=>{
   });
 }
 
-const firebaseSingUp = (firstName: string, lastName: string, email: string, password: string, file: File) => {
+const firebaseSingUp = (firstName: string, lastName: string, email: string, password: string, file?: File) => {
   createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        const storageRef= ref(storage, `/users/${user.uid}/${file.name}`)
-        uploadBytes(storageRef, file).then((snapshot) => {
-          console.log('Uploaded a blob or file!');
+        if(file){
+          const storageRef= ref(storage, `/users/${user.uid}/${file.name}`)
+          uploadBytes(storageRef, file).then((snapshot) => {
+            console.log('Uploaded a blob or file!');
+            getDownloadURL(storageRef).then(imageUrl => {
+              updateProfile(user, {
+                displayName: firstName + ' ' + lastName,
+                photoURL: imageUrl,
+              }).then(() => {
+                console.log('auth.currentUser', auth.currentUser);
+              })
+            })
+          })
+        }else {
+          const storageRef= ref(storage, '/users/defaultAvatar/ava.png')
           getDownloadURL(storageRef).then(imageUrl => {
-            updateProfile(auth.currentUser!, {
+            updateProfile(user, {
               displayName: firstName + ' ' + lastName,
               photoURL: imageUrl,
             }).then(() => {
               console.log(auth.currentUser);
             })
           })
-        })
+        }
       }).catch(error);
 }
 

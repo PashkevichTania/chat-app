@@ -3,6 +3,9 @@ import styled from "styled-components";
 interface MessageStyledProps {
   myMsg: boolean
 }
+interface AvatarStyledProps {
+  size?: string
+}
 
 export const ErrorFormMessage = styled.div`
   margin: 5px;
@@ -60,4 +63,12 @@ export const UserStyled = styled.div`
 
 export const ChatStyled = styled.div`
 
+`
+
+export const AvatarStyled = styled.img<AvatarStyledProps>`
+  width: ${props => props.size ? props.size : "100px"};
+  height: ${props => props.size ? props.size : "100px"};
+  object-fit: cover;
+  border-radius: 50%;
+  border: #2196f3 solid 2px;
 `

@@ -19,3 +19,8 @@ export interface IMessage {
   text: string,
   date: string
 }
+
+export interface IImage {
+  file: any,
+  binaryStr: string,
+}

@@ -1,15 +1,17 @@
 import React, {useState} from 'react';
-import {Button, Checkbox, Container, FormControlLabel, TextField, Typography} from "@mui/material";
-import {ErrorFormMessage} from "components/Styled/styledComponents";
+import {Button, Checkbox, Container, FormControlLabel, Grid, TextField, Typography} from "@mui/material";
+import {AvatarStyled, ErrorFormMessage} from "components/Styled/styledComponents";
 import {useFormik} from "formik";
 import * as Yup from "yup";
-import {firebaseSingUp} from "firebase";
+import {firebaseSingUp} from "services/firebase";
+import Dropzone from "components/dropzone/dropzone";
+import {IImage} from "interfaces";
 
 const SignUp = () => {
 
 
   const [checked, setChecked] = useState(false);
-  const [img, setimg] = useState<File | null>(null);
+  const [img, setImg] = useState<IImage | null>(null);
 
   const formik = useFormik({
     initialValues: {
@@ -35,7 +37,7 @@ const SignUp = () => {
 
     onSubmit: (values) => {
       console.log(img)
-      firebaseSingUp(values.firstName, values.lastName, values.email, values.password, img!);
+      firebaseSingUp(values.firstName, values.lastName, values.email, values.password, img?.file);
       if (checked) {
         window.localStorage.setItem('userEmail', values.email)
       }
@@ -116,9 +118,14 @@ const SignUp = () => {
               />}
               label="Remember me"
           />
-          <input type="file" onChange={(event) => { // @ts-ignore
-            setimg(event.target.files[0])
-          }}/>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={8}>
+              <Dropzone setImg={setImg}/>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              {img? <AvatarStyled src={img.binaryStr} alt="avatar" />: null}
+            </Grid>
+          </Grid>
           <Button type={"submit"}>Sign up</Button>
         </form>
       </Container>
