@@ -20,7 +20,6 @@ const SendMessageInput = () => {
     };
 
     const message: IMessage = {
-      socketID: Socket.socket.id,
       user: user,
       text: target.text.value,
       date: currentDate.toLocaleString(
