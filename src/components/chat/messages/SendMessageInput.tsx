@@ -29,6 +29,7 @@ const SendMessageInput = () => {
       ),
     }
     Socket.sendMessage(message);
+    target.text.value = '';
   }
 
   return (
