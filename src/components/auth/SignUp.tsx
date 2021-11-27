@@ -3,13 +3,13 @@ import {Button, Checkbox, Container, FormControlLabel, Grid, TextField, Typograp
 import {AvatarStyled, ErrorFormMessage} from "components/Styled/styledComponents";
 import {useFormik} from "formik";
 import * as Yup from "yup";
-import {firebaseSingUp} from "services/firebase";
+import {useFirebase} from "services/useFirebase";
 import Dropzone from "components/dropzone/dropzone";
 import {IImage} from "interfaces";
 
 const SignUp = () => {
 
-
+  const { firebaseSingUp } = useFirebase();
   const [checked, setChecked] = useState(false);
   const [img, setImg] = useState<IImage | null>(null);
 

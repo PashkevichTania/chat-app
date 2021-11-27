@@ -42,6 +42,8 @@ const SendMessageInput = () => {
               type="text"
               fullWidth
               variant="standard"
+              multiline
+              maxRows={2}
               InputProps={{
                 endAdornment:
                     <IconButton color={"primary"} type={"submit"}>

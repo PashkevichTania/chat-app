@@ -3,10 +3,11 @@ import {Button, Checkbox, Container, FormControlLabel, TextField, Typography} fr
 import {ErrorFormMessage} from "components/Styled/styledComponents";
 import {useFormik} from "formik";
 import * as Yup from "yup";
-import {firebaseSingIn} from "services/firebase";
+import {useFirebase} from "services/useFirebase";
+
 
 const LogIn = () => {
-
+  const { firebaseSingIn } = useFirebase();
   const [checked, setChecked] = useState(false);
 
   const formik = useFormik({

@@ -72,3 +72,20 @@ export const AvatarStyled = styled.img<AvatarStyledProps>`
   border-radius: 50%;
   border: #2196f3 solid 2px;
 `
+
+
+export const AvatarFullStyled = styled.img<AvatarStyledProps>`
+  max-width: ${props => props.size ? props.size : "100px"};
+  max-height: ${props => props.size ? props.size : "100px"};
+  object-fit: cover;
+  border: #2196f3 solid 2px;
+`
+
+export const NavBarStyled = styled.div`
+  font-weight: 400;
+  font-size: 20px;
+  width: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`
