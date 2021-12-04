@@ -7,7 +7,9 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   updateProfile,
-  signOut
+  signOut,
+  updateEmail,
+  updatePassword,
 } from "firebase/auth";
 import {
   getStorage,
@@ -39,7 +41,7 @@ const storage = getStorage(app);
 
 const auth = getAuth();
 
-const error = (error: any)=>{
+const showErrorMessage = (error: any)=>{
   const errorCode = error.code;
   const errorMessage = error.message;
   console.log(error)
@@ -96,7 +98,7 @@ export const useFirebase = () => {
               })
             })
           }
-        }).catch(error);
+        }).catch(showErrorMessage);
   }
 
   const firebaseSingIn = (email: string, password: string) => {
@@ -104,15 +106,71 @@ export const useFirebase = () => {
         .then(() => {
           setUserToStorage();
         })
-        .catch(error);
+        .catch(showErrorMessage);
   }
 
   const firebaseLogOut = () =>{
     signOut(auth).then(() => {
       // Sign-out successful.
       dispatch(setAuth(false));
-    }).catch(error);
+    }).catch(showErrorMessage);
   }
 
-  return {firebaseSingIn, firebaseSingUp, firebaseLogOut};
+
+  const firebaseUpdateName = async(name: string) => {
+    const user = auth.currentUser;
+    try {
+      if (user) {
+        await updateProfile(user, {displayName: name});
+        setUserToStorage();
+      }
+    }catch (e){
+      showErrorMessage(e);
+    }
+  }
+
+  const firebaseUpdateEmailAndPassword = async(email: string, password: string, newPassword: string) => {
+    const user = auth.currentUser;
+    try {
+      if (user) {
+        await updateEmail(user, email);
+        if (password.trim()){
+          await updatePassword(user, password.trim());
+        }
+        setUserToStorage();
+      }
+    }catch (e){
+      showErrorMessage(e);
+    }
+  }
+
+  const firebaseUpdateAvatar = (ava: File) =>{
+    const user = auth.currentUser;
+    try {
+      if(ava && user){
+        const storageRef= ref(storage, `/users/avatars/${user.uid}/${ava.name}`)
+        uploadBytes(storageRef, ava).then((snapshot) => {
+          getDownloadURL(storageRef).then(imageUrl => {
+            updateProfile(user, {
+              photoURL: imageUrl,
+            }).then(() => {
+              setUserToStorage();
+            })
+          })
+        })
+      }
+    }catch (e){
+      showErrorMessage(e);
+    }
+  }
+
+
+  return {
+    firebaseSingIn,
+    firebaseSingUp,
+    firebaseLogOut,
+    firebaseUpdateName,
+    firebaseUpdateEmailAndPassword,
+    firebaseUpdateAvatar
+  };
 }
