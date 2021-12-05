@@ -25,6 +25,7 @@ const Profile = () => {
           </Grid>
           <Grid item xs={12} md={6} sx={{display: "flex", flexDirection: "column"}}>
             <UpdateName />
+            <Typography textAlign={"center"}>To update email and password, please verify your current password.</Typography>
             <UpdateEmailAndPassword />
           </Grid>
         </Grid>

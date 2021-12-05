@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import {IconButton} from "@mui/material";
 
 interface MessageStyledProps {
   myMsg: boolean
@@ -88,4 +89,8 @@ export const NavBarStyled = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+`
+
+export const PasswordIconButtonStyled = styled(IconButton)`
+  margin-left: 16px;
 `
