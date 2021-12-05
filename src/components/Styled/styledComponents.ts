@@ -8,6 +8,10 @@ interface AvatarStyledProps {
   size?: string
 }
 
+interface isAdminProps {
+  isAdmin?: boolean
+}
+
 export const ErrorFormMessage = styled.div`
   margin: 5px;
   color: #de3b3b;
@@ -52,10 +56,10 @@ export const MessagesContainerStyled = styled.div`
   overflow: auto;
 `
 
-export const UserStyled = styled.div`
+export const UserStyled = styled.div<isAdminProps>`
+  background-color:${props => props.isAdmin ? '#0fd9bc' : '#44D62C'};
   margin: 10px;
   padding: 10px;
-  background-color: #44D62C;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
