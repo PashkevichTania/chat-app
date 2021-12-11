@@ -14,7 +14,7 @@ const Message = (props: { message: IMessage }) => {
 
   return (
       <MessageStyled myMsg={myMsg}>
-        <AvatarStyled size={"50px"} src={user.photoURL} alt="user avatar"/>
+        <AvatarStyled size={"50px"} src={message.user.photoURL} alt="user avatar"/>
         <div className={"userName"}>
           {message.user.displayName}
         </div>

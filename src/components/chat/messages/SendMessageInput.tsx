@@ -20,7 +20,6 @@ const SendMessageInput = () => {
     };
 
     const message: IMessage = {
-      socketID: Socket.socket.id,
       user: user,
       text: target.text.value,
       date: currentDate.toLocaleString(
@@ -29,6 +28,7 @@ const SendMessageInput = () => {
       ),
     }
     Socket.sendMessage(message);
+    target.text.value = '';
   }
 
   return (
@@ -42,6 +42,8 @@ const SendMessageInput = () => {
               type="text"
               fullWidth
               variant="standard"
+              multiline
+              maxRows={2}
               InputProps={{
                 endAdornment:
                     <IconButton color={"primary"} type={"submit"}>

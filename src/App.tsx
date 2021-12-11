@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import SocketEventsListener from "services/socket/SocketEventsListener";
 import Chat from "components/chat/Chat";
 import AuthCheck from "components/auth/AuthCheck";
+import Profile from "components/profile/Profile";
 
 
 function App() {
@@ -60,6 +61,9 @@ function App() {
               </Route>
               <Route path="/chat" exact>
                 <Chat/>
+              </Route>
+              <Route path="/profile" exact>
+                <Profile/>
               </Route>
             </Switch>
             <ToastContainer
